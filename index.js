@@ -39,10 +39,31 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+ this.name = name;
+ this.age = age;
+ this.stomach = [];
 }
 
+Person.prototype.eat = function (foodItem) {
+  if(this.stomach.length < 10) {
+    this.stomach.push(foodItem);
+  }
+}
+
+Person.prototype.poop = function () {
+  this.stomach = [];
+}
+
+Person.prototype.toString = function () {
+   return `${this.name}, ${this.age}`;
+}
+
+const mark = new Person({
+  name: "mark",
+  age: 10
+});
+console.log(mark);
 /*
   TASK 2
     - Write a Car constructor that initializes `model` and `milesPerGallon` from arguments.
@@ -57,29 +78,42 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
+function Car(model, milesPerGallon) {
+  this.model = model,
+  this.milesPerGallon = milesPerGallon,
+  this.odometer = 0;
+  this.tank = 0;
+}
 
+Car.prototype.fill = function (gallons) {
+  this.tank += gallons;
 }
 
 /*
   TASK 3
     - Write a Baby constructor subclassing Person.
-    - Besides `name` and `age`, Baby takes a third argument to initialize `favoriteToy`.
+    - Besides `name` and `age`, Baby takes a third ageto initialize `favoriteToy`.
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
 }
+Baby.prototype = Object.create(Person.prototype)
+Baby.prototype.play = function () {
+  return `Playing with ${this.favoriteToy}`;
+}
+
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. global - this in the global context refers to the global context
+  2. implicit - this in an object refers to the object 
+  3. constructor - this refers to the particular instance of the constructed object 
+  4. explicit - this is bound to an object using methods like call, bind, etc
 */
 
 
